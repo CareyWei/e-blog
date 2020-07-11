@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyzzw.blog.mapper.UserMessageMapper">
+
+
+    <select id="selectMessage" resultType="com.dyzzw.blog.vo.UserMessageVo">
+
+        select m.*,
+        (select username from `user` where id= m.from_user_id)
+            as fromUserName,
+        (select title from `post` where id= m.post_id)
+            as postTitle
+            from user_message m
+            ${ew.customSqlSegment}
+
+    </select>
+</mapper>

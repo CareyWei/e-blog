@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyzzw.blog.mapper.PostMapper">
+
+    <select id="selectPosts" resultType="com.dyzzw.blog.vo.PostVo">
+
+        select p.*,u.id as authodID,
+        u.username as authodName,
+        u.avatar as authodAvatar,
+        c.id as categoryId,
+        c.`name` as categoryName
+        from post p
+
+        LEFT JOIN user u ON p.user_id=u.id
+        LEFT JOIN category c ON p.category_id=c.id
+         ${ew.customSqlSegment}
+
+    </select>
+    <select id="selectOnePost" resultType="com.dyzzw.blog.vo.PostVo">
+
+        select p.*,u.id as authodID,
+        u.username as authodName,
+        u.avatar as authodAvatar,
+        c.`name` as categoryName
+        from post p
+
+        LEFT JOIN user u ON p.user_id=u.id
+        LEFT JOIN category c ON p.category_id=c.id
+         ${ew.customSqlSegment}
+
+    </select>
+</mapper>

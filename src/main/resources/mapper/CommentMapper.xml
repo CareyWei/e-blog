@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyzzw.blog.mapper.CommentMapper">
+
+    <resultMap id="CommentVo" type="com.dyzzw.blog.vo.CommentVo">
+        <result column="authodId" property="authodID"  />
+        <result column="authodName" property="authodName"  />
+        <result column="authodAvatar" property="authodAvatar" />
+        <result column="authodCount" property="authodCount" />
+    </resultMap>
+
+
+
+    <select id="selectComment" resultType="com.dyzzw.blog.vo.CommentVo">
+
+          SELECT
+            c.*,
+
+            u.id AS authodID,
+            u.username AS authodName,
+            u.avatar AS authodAvatar
+        FROM
+            comment c
+        LEFT JOIN user u ON c.user_id = u.id
+
+        ${ew.customSqlSegment}
+
+    </select>
+    <select id="selectCountCo" resultMap="CommentVo">
+
+          select   u.id AS authodID,
+             u.username AS authodName,
+              u.avatar AS authodAvatar,
+            count(user_id) as authodCount
+            from `comment` c
+            LEFT JOIN `user` u ON c.user_id = u.id
+            GROUP BY c.user_id,u.username
+
+            ${ew.customSqlSegment}
+
+    </select>
+
+</mapper>
